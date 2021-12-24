@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void min_value_row(double *matrix, int n){
+void step1(double *matrix, int n){ //min_value_row
 
     int min;
     double min_value_row[n];

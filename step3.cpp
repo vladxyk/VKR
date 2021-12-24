@@ -3,13 +3,9 @@
 
 using namespace std;
 
-
-void min_lines(double *matrix, int *lines, int n){
+void step3(double *matrix, int *lines, int *zerosRow, int *zerosCol, int n){ //min_lines
     
     int assigned[n];
-    int test;
-    int zerosRow[n];
-    int zerosCol[n];
     int zerosRowAssigned[n];
     int arrAssigned[n * n];
 
