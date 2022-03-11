@@ -2,8 +2,8 @@
 #include <fstream>
 #include <algorithm>
 #include <cstring>
-#include "mkl.h"
-#include "mkl_spblas.h"
+//#include "mkl.h"
+//#include "mkl_spblas.h"
 #include <time.h>
 #include "header.hpp"
 
@@ -28,8 +28,8 @@ int main(int argc, char *argv[]){
     cout << "Enter size of matrix: ";
     cin >> N;
 
-    cout << "min or max? Enter 1 or 2" << endl;
-    cin >> minmax;
+    //cout << "min or max? Enter 1 or 2" << endl;
+    //cin >> minmax;
    
     double *original_matrix = new double[N * N];
     double *mat = new double[N * N];
@@ -37,13 +37,44 @@ int main(int argc, char *argv[]){
 
     init_matrix(original_matrix, N);
     print_matrix(original_matrix, N);
+
+    int *arrRowIndex = new int[N + 1];
+    CSR_arr_row_index(arrRowIndex, original_matrix, N);
+
+    int NZ = arrRowIndex[N];
+    cout << "NZ = " << NZ << endl;
+    double *arrValue = new double[NZ];
+    int *arrCol = new int[NZ];
+    CSR_arr_value(arrValue, original_matrix, N);
+    CSR_arr_col(arrCol, original_matrix, N, NZ);
+
+    print_arr_value(arrValue, NZ);
+    print_arr_col(arrCol, NZ);
+    print_arr_row_index(arrRowIndex, N);
     
     memcpy(mat, original_matrix, sizeof(original_matrix) * N * N);
 
+    cout << "\nstep1" << endl;
+    NZ = step1(mat, N, arrRowIndex, arrValue, arrCol, NZ);
+    cout << "NZ = " << NZ << endl;
+    print_matrix(mat, N);
+    print_arr_value(arrValue, NZ);
+    print_arr_col(arrCol, NZ);
+    print_arr_row_index(arrRowIndex, N);
+
+    cout << "\nstep2" << endl;
+    NZ = step2(mat, N, arrRowIndex, arrValue, arrCol, NZ);
+    cout << "NZ = " << NZ << endl;    
+    print_matrix(mat, N);
+    print_arr_value(arrValue, NZ);
+    print_arr_col(arrCol, NZ);
+    print_arr_row_index(arrRowIndex, N);
+
+/*
     if(minmax == 2){
-        for(int i = 0; i < N * N; i++){
-            if(original_matrix[i] > max){
-                max = original_matrix[i];
+        for(int i = 0; i < NZ; i++){
+            if(arrValue[i] > max){
+                max = arrValue[i];
             }
         }
         for(int i = 0; i < N * N; i++){
@@ -162,6 +193,6 @@ int main(int argc, char *argv[]){
     delete []original_matrix;
     delete []mat;
     delete []lines;
-
+*/
     return 0;
 }
