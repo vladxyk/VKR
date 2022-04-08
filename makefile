@@ -4,4 +4,4 @@ INC=/opt/intel/oneapi/mkl/2021.4.0/include
 LIB=/opt/intel/oneapi/mkl/2021.4.0/lib/intel64
 
 all:
-	$(CPP) main.cpp init.cpp printAll.cpp step1.cpp step2.cpp step3.cpp step4.cpp -L$(LIB) -I$(INC) -o task -qmkl=sequential -w
+	g++ main.cpp init.cpp printAll.cpp step1.cpp step2.cpp step3.cpp step4.cpp -o task
